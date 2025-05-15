@@ -11,18 +11,18 @@ import java.net.*; //This package allows us to access the internet. The splashSc
 //The Program
 public class ExpenseCalculator
 {
-    //The Program's Main Method
-    public static void main(String[] args) throws IOException
-    {
+	//The Program's Main Method
+	public static void main(String[] args) throws IOException
+	{
 		//Display the splash screen.
 		splashScreen();
 	}
 
-    //Method for displaying the splash screen graphic.
+	//Method for displaying the splash screen graphic.
 	public static void splashScreen() throws IOException
-    {
+	{
 		//Variables
-        int exitProgram;
+		int exitProgram;
 
 		//Retrieve the splash screen from GitHub and assign it to the variable "icon".
 		final ImageIcon icon = new ImageIcon(new URL("https://github.com/RikaPatterson/Java_Programs/blob/main/splashScreen.png?raw=true"));
