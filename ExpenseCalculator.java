@@ -3,44 +3,119 @@
 //Created May 15th, 2025
 //This is the main program file for the travel expense calculator.
 
-//Import Java utilities.
-import java.io.*;
-import javax.swing.*;
-import java.net.*; //This package allows us to access the internet. The splashScreen method references a URL where I have placed the splash screen graphic.
+//Import Java Utilities
+import java.util.Scanner;	//For keyboard scanner object
+import java.io.*;			//For throwing IOException
+import javax.swing.*;		//For UI stuff (JPanels, JFrames, etc.)
+import java.net.*;			//For accessing the internet. The splashScreen method references a URL where I have placed the splash screen graphic.
 
-//The Program
+//ExpenseCalculator
 public class ExpenseCalculator
 {
-	//The Program's Main Method
+	//main Method
 	public static void main(String[] args) throws IOException
 	{
-		//Display the splash screen.
-		splashScreen();
+		//This program uses keyboard inputs by the user.
+		//Therefore, we must establish our scanner object (the keyboard).
+		Scanner keyboard = new Scanner(System.in);
+
+		//Display Splash Screen
+		welcomeSplashScreen();
+
+		//Print the program header to the terminal.
+		System.out.println("");
+		System.out.println("_________________________");
+		System.out.println("");
+		System.out.println("Travel Expense Calculator");
+		System.out.println("Written by Rika Patterson");
+		System.out.println("Created May 15, 2025 (Last Updated May 20, 2025)");
+		System.out.println("");
+		System.out.println("_________________________");
+		System.out.println("");
+
+		//The program will repeat until the user clicks "Exit" or the red "X" in the top right corner.
+		do
+		{
+			//Retrieve today's date (formatted) using the retreiveDate method.
+			String dateString = retreiveDate();
+
+			//Send today's date information to the userInputs method, which handles the user inputs and generates travel expense receipts.
+			userInputs(dateString);
+
+			//After an expense report has been generated for one employee, we will ask the user if they would like to run the program again for another employee.
+			//Define new JPanel "repeatPanel".
+			JPanel repeatPanel = new JPanel();
+
+			//Set repeatPanel Layout
+			repeatPanel.setLayout(new BoxLayout(repeatPanel, BoxLayout.Y_AXIS));
+
+			//Change the default window buttons from "Ok" and "Cancel" to "Run Again" and "Exit", respectively.
+			UIManager.put("OptionPane.okButtonText", "Run Again");
+			UIManager.put("OptionPane.cancelButtonText", "Exit");
+
+			///The "exitProgram" variable checks whether the user clicked "OK" or "Exit".
+			int exitProgram = JOptionPane.showConfirmDialog(null, "Would you like to run the program again for another employee?", "Travel Expense Calculator", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE);
+
+			//If the user clicks the "Exit" button or the red "X' in the top right corner, the program will close to terminal.
+			if (exitProgram==JOptionPane.NO_OPTION||exitProgram==JOptionPane.CLOSED_OPTION)
+			{
+				System.out.println("");
+				System.out.println("You have exited the program. Thank you, and goodbye.");
+				System.out.println("_________________________");
+				System.out.println("");
+				System.exit(1);
+			}
+		}while(1==1);
 	}
 
-	//Method for displaying the splash screen graphic.
-	public static void splashScreen() throws IOException
+	//welcomeSplashScreen Method
+	public static void welcomeSplashScreen() throws IOException
 	{
-		//Variables
-		int exitProgram;
+		//Retrieve the splash screen image from GitHub and assign it to the variable "icon".
+		final ImageIcon icon = new ImageIcon(new URL("https://github.com/RikaPatterson/Java_Programs/blob/main/SplashScreen.png?raw=true"));
 
-		//Retrieve the splash screen from GitHub and assign it to the variable "icon".
-		final ImageIcon icon = new ImageIcon(new URL("https://github.com/RikaPatterson/Java_Programs/blob/main/splashScreen.png?raw=true"));
-
-		//Change the default window buttons from "Ok" and "Cancel" to "Start Program "and "Exit", respectively.
+		//Change the default window buttons from "Ok" and "Cancel" to "Start Program" and "Exit", respectively.
 		UIManager.put("OptionPane.okButtonText", "Start Program");
 		UIManager.put("OptionPane.cancelButtonText", "Exit");
 
 		//Create a JOptionPane that displays the image retrieved above.
-		exitProgram = JOptionPane.showConfirmDialog(null, "", "Rika Patterson's Travel Expense Calculator", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, icon);
+		int exitProgram = JOptionPane.showConfirmDialog(null, "", "Homestar Corporation Travel Expense Calculator", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, icon);
 
 		//If the user clicks the "Exit" button or the red "X' in the top right corner, the program will close to terminal.
-		if (exitProgram == JOptionPane.CANCEL_OPTION || exitProgram == JOptionPane.CLOSED_OPTION) {
-			System.out.println("_____________________________________________________");
+		if(exitProgram==JOptionPane.CANCEL_OPTION||exitProgram==JOptionPane.CLOSED_OPTION)
+		{
+			System.out.println("");
 			System.out.println("You have exited the program. Thank you, and goodbye.");
 			System.out.println("_____________________________________________________");
 			System.out.println("");
 			System.exit(1);
 		}
+
 	}
+
+	//retreiveDate Method
+	public static String retreiveDate() throws IOException
+	{
+		//Reference the DateClass file as "dateSubProgram".
+		DateClass dateSubProgram = new DateClass();
+
+		//Call the appropriate methods within dateSubProgram to get our data.
+		int currentYear = dateSubProgram.getYear();		 //Retreive the current year.
+		String currentMonth = dateSubProgram.getMonth(); //Retreive the current month.
+		int currentDay = dateSubProgram.getDay();		 //Retreive the current day.
+
+		//Return today's date (formatted) as a string for use in outputs.
+		return(currentMonth + " " + currentDay + ", " + currentYear);
+	}
+
+	//userInputs Method
+	public static void userInputs(String dateString) throws IOException
+	{
+		//Reference the InputClass file as "inputSubProgram".
+		InputClass inputSubProgram = new InputClass(dateString);
+
+		//Call the "Inputs" method within inputSubProgram to process user inputs and generate travel expense receipts.
+		inputSubProgram.inputs();
+	}
+
 }
