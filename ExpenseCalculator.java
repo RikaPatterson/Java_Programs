@@ -23,15 +23,11 @@ public class ExpenseCalculator
 		welcomeSplashScreen();
 
 		//Print the program header to the terminal.
-		System.out.println("");
-		System.out.println("_________________________");
-		System.out.println("");
+		System.out.println("\n_________________________\n");
 		System.out.println("Travel Expense Calculator");
 		System.out.println("Written by Rika Patterson");
 		System.out.println("Created May 15, 2025 (Last Updated May 20, 2025)");
-		System.out.println("");
-		System.out.println("_________________________");
-		System.out.println("");
+		System.out.println("\n_________________________\n");
 
 		//The program will repeat until the user clicks "Exit" or the red "X" in the top right corner.
 		do
@@ -59,11 +55,9 @@ public class ExpenseCalculator
 			//If the user clicks the "Exit" button or the red "X' in the top right corner, the program will close to terminal.
 			if (exitProgram==JOptionPane.NO_OPTION||exitProgram==JOptionPane.CLOSED_OPTION)
 			{
-				System.out.println("");
-				System.out.println("You have exited the program. Thank you, and goodbye.");
-				System.out.println("_________________________");
-				System.out.println("");
-				System.exit(1);
+				System.out.println("\nYou have exited the program. Thank you, and goodbye.");
+				System.out.println("_________________________\n");
+				System.exit(1); //Exit Program
 			}
 		}while(1==1);
 	}
@@ -84,11 +78,9 @@ public class ExpenseCalculator
 		//If the user clicks the "Exit" button or the red "X' in the top right corner, the program will close to terminal.
 		if(exitProgram==JOptionPane.CANCEL_OPTION||exitProgram==JOptionPane.CLOSED_OPTION)
 		{
-			System.out.println("");
-			System.out.println("You have exited the program. Thank you, and goodbye.");
-			System.out.println("_____________________________________________________");
-			System.out.println("");
-			System.exit(1);
+			System.out.println("\nYou have exited the program. Thank you, and goodbye.");
+			System.out.println("_____________________________________________________\n");
+			System.exit(1); //Exit Program
 		}
 
 	}
@@ -117,5 +109,4 @@ public class ExpenseCalculator
 		//Call the "Inputs" method within inputSubProgram to process user inputs and generate travel expense receipts.
 		inputSubProgram.inputs();
 	}
-
 }

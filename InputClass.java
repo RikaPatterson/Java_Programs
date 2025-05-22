@@ -75,32 +75,21 @@ public class InputClass
 			PrintWriter textFileOutput = new PrintWriter(empName + " Invoice.txt");
 
 			//Add data to the travel expense receipt file.
-			textFileOutput.println("");
-			textFileOutput.println("Travel Expense Calculator");
-			textFileOutput.println("");
+			textFileOutput.println("\nTravel Expense Calculator\n");
 			textFileOutput.println(empName + "'s Invoice");
 			textFileOutput.println(stringDate);
-			textFileOutput.println("_________________________");
-			textFileOutput.println("");
+			textFileOutput.println("_________________________\n");
 			textFileOutput.println("Employee Name:\t\t\t" + empName);
-			textFileOutput.println("Duration of Trip: \t\t" + tripDays + " Days");
-			textFileOutput.print("Miles Driven in POV: \t\t");
-			textFileOutput.printf("%,.1f", povMileage);
-			textFileOutput.print(" Miles\n");
-			textFileOutput.println(" ");
-			textFileOutput.printf("Total Mileage Reimbursement:\t$%,.2f \n", mileReimburse);
-			textFileOutput.println(" ");
+			textFileOutput.println("Duration of Trip:\t\t" + tripDays + " Days");
+			textFileOutput.printf("Miles Driven in POV:\t\t%,.1f Miles\n", povMileage);
+			textFileOutput.printf("Total Mileage Reimbursement:\t$%,.2f\n\n", mileReimburse);
 			textFileOutput.close(); //Close textFileOutput.
 
 			//Echo print the travel expense receipt to the terminal.
-			System.out.println("");
 			System.out.println("Employee Name:\t\t\t" + empName);
-			System.out.print("Duration of Trip: \t\t" + tripDays + " Days\n");
-			System.out.print("Miles Driven in POV: \t\t");
-			System.out.printf("%,.1f", povMileage);
-			System.out.print(" Miles\n");
-			System.out.printf("Total Mileage Reimbursement:\t$%,.2f", mileReimburse);
-			System.out.println("");
+			System.out.print("Duration of Trip:\t\t" + tripDays + " Days\n");
+			System.out.printf("Miles Driven in POV:\t\t%,.1f Miles\n", povMileage);
+			System.out.printf("Total Mileage Reimbursement:\t$%,.2f\n", mileReimburse);
 
 		}
 		else //Otherwise, if the user exited the program via the "Exit" or "X" button...
@@ -109,7 +98,7 @@ public class InputClass
 			System.out.println("You have exited the program. Thank you, and goodbye.");
 			System.out.println("_________________________");
 			System.out.println("");
-			System.exit(1);
+			System.exit(1); //Exit Program
 		}
 	}
 }
