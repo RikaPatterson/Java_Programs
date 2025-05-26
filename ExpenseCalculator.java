@@ -103,10 +103,12 @@ public class ExpenseCalculator
 	//userInputs Method
 	public static void userInputs(String dateString) throws IOException
 	{
-		//Reference the InputClass file as "inputSubProgram".
-		InputClass inputSubProgram = new InputClass(dateString);
+		//Reference the input files, where the user inputs will be carried out.
+		FirstInput inputSubProgram = new FirstInput(dateString);
+		SecondInput inputSubProgram2 = new SecondInput();
 
-		//Call the "Inputs" method within inputSubProgram to process user inputs and generate travel expense receipts.
-		inputSubProgram.inputs();
+		//Call the input methods within the program subclasses to process user inputs and generate travel expense receipts.
+		int tripDuration = inputSubProgram.firstInputs();
+		inputSubProgram2.secondInputs();
 	}
 }

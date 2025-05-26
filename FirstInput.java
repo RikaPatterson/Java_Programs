@@ -8,22 +8,25 @@
 import javax.swing.*;
 import java.io.*;
 
-//InputClass Class
-public class InputClass
+//FirstInput Subclass
+public class FirstInput
 {
-	//The variable to hold the data for the date string.
+	//Variable to hold the data for the date string.
 	private String stringDate;
 
-	//Assign stringDate to the string that was passed into InputClass.
-	public InputClass(String date)
+	//Assign stringDate to the string that was passed into FirstInput.
+	public FirstInput(String date)
 	{
 		stringDate = date;
 	}
 
-	//Inputs Method
-	public void inputs() throws IOException
+	//firstInputs Method
+	public int firstInputs() throws IOException
 	{
-		//User Inputs
+		//Initialize "tripDays". This value is returned to ExpenseCalculator after FirstInput has completed.
+		int tripDays = 0;
+
+		//User Input Fields
 		final JTextField nameField = new JTextField(5);
 		JTextField daysField = new JTextField(5);
 		JTextField mileageField = new JTextField(5);
@@ -60,11 +63,11 @@ public class InputClass
 		{
 			//Assign the user-entered text from the textboxes to their respective variables.
 			String empName = nameField.getText();
-			String tripTemp = daysField.getText();	 //Assign the user-entered string value to a temporary variable before parsing.
-			String povTemp = mileageField.getText(); //Assign the user-entered string value to a temporary variable before parsing.
+			String tripTemp = daysField.getText();		//Assign the user-entered string value to a temporary variable before parsing.
+			String povTemp = mileageField.getText();	//Assign the user-entered string value to a temporary variable before parsing.
 
 			//Parse the temporary string variables into their proper types.
-			int tripDays = Integer.parseInt(tripTemp);
+			tripDays = Integer.parseInt(tripTemp);
 			double povMileage = Double.parseDouble(povTemp);
 
 			//Calculate the mileage reimbursement based on a pre-determined rate by the employer.
@@ -83,22 +86,30 @@ public class InputClass
 			textFileOutput.println("Duration of Trip:\t\t" + tripDays + " Days");
 			textFileOutput.printf("Miles Driven in POV:\t\t%,.1f Miles\n", povMileage);
 			textFileOutput.printf("Total Mileage Reimbursement:\t$%,.2f\n\n", mileReimburse);
-			textFileOutput.close(); //Close textFileOutput.
+			textFileOutput.close(); //Close the invoice text file.
 
-			//Echo print the travel expense receipt to the terminal.
-			System.out.println("Employee Name:\t\t\t" + empName);
+			//Echo print to the terminal.
+			System.out.println("\nEmployee Name:\t\t\t" + empName);
 			System.out.print("Duration of Trip:\t\t" + tripDays + " Days\n");
 			System.out.printf("Miles Driven in POV:\t\t%,.1f Miles\n", povMileage);
 			System.out.printf("Total Mileage Reimbursement:\t$%,.2f\n", mileReimburse);
 
+			//Create a text file to store the name of the employee invoice text file.
+			//Only a single value may be returned from this subclass (we are returning "tripDays").
+			//This value is needed elsewhere in the program moving forward to append the invoice receipt.
+			PrintWriter storeFilename = new PrintWriter("FilenameStorage.txt");
+			storeFilename.println(empName + " Invoice.txt");
+			storeFilename.close(); //Close "FilenameStorage.txt"
+
 		}
 		else //Otherwise, if the user exited the program via the "Exit" or "X" button...
 		{
-			System.out.println("");
-			System.out.println("You have exited the program. Thank you, and goodbye.");
-			System.out.println("_________________________");
-			System.out.println("");
+			System.out.println("\nYou have exited the program. Thank you, and goodbye.");
+			System.out.println("_________________________\n");
 			System.exit(1); //Exit Program
 		}
+
+		//Return tripDays to ExpenseCalculator
+		return tripDays;
 	}
 }
