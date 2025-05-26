@@ -107,10 +107,12 @@ public class ExpenseCalculator
 		FirstInput inputSubProgram = new FirstInput(dateString);
 		SecondInput inputSubProgram2 = new SecondInput();
 		ThirdInput inputSubProgram3 = new ThirdInput();
+		FourthInput inputSubProgram4 = new FourthInput();
 
 		//Call the input methods within the program subclasses to process user inputs and generate travel expense receipts.
 		int tripDuration = inputSubProgram.firstInputs();
 		inputSubProgram2.secondInputs();
 		inputSubProgram3.thirdInputs();
+		inputSubProgram4.fourthInputs(tripDuration); //Pass tripDuration
 	}
 }
