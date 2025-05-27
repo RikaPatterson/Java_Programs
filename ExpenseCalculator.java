@@ -35,8 +35,11 @@ public class ExpenseCalculator
 			//Retrieve today's date (formatted) using the retreiveDate method.
 			String dateString = retreiveDate();
 
+			//Create an instance of the CalculationClass external class.
+			CalculationClass calculator = new CalculationClass();
+
 			//Send today's date information to the userInputs method, which handles the user inputs and generates travel expense receipts.
-			userInputs(dateString);
+			userInputs(dateString, calculator);
 
 			//After an expense report has been generated for one employee, we will ask the user if they would like to run the program again for another employee.
 			//Define new JPanel "repeatPanel".
@@ -101,7 +104,7 @@ public class ExpenseCalculator
 	}
 
 	//userInputs Method
-	public static void userInputs(String dateString) throws IOException
+	public static void userInputs(String dateString, CalculationClass calculate) throws IOException
 	{
 		//Reference the input files, where the user inputs will be carried out.
 		FirstInput inputSubProgram = new FirstInput(dateString);
@@ -111,8 +114,8 @@ public class ExpenseCalculator
 
 		//Call the input methods within the program subclasses to process user inputs and generate travel expense receipts.
 		int tripDuration = inputSubProgram.firstInputs();
-		inputSubProgram2.secondInputs();
+		inputSubProgram2.secondInputs(calculate);
 		inputSubProgram3.thirdInputs();
-		inputSubProgram4.fourthInputs(tripDuration); //Pass tripDuration
+		inputSubProgram4.fourthInputs(tripDuration, calculate); //Pass tripDuration
 	}
 }

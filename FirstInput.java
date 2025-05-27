@@ -71,7 +71,7 @@ public class FirstInput
 			double povMileage = Double.parseDouble(povTemp);
 
 			//Calculate the mileage reimbursement based on a pre-determined rate by the employer.
-			final double mileageRate = 0.5;
+			final double mileageRate = 0.5; //This rates is currently hard-coded here and reflects a value that would be chosen by the employer.
 			double mileReimburse = povMileage * mileageRate;
 
 			//Create a text file for generating a travel expense receipt.

@@ -15,13 +15,20 @@ public class FourthInput
 	private String invoiceFileName = "";
 
 	//tripDuration is passed into this method (used to know the length of the trip in number of days).
-	public void fourthInputs(int tripDuration) throws IOException
+	public void fourthInputs(int tripDuration, CalculationClass calculate) throws IOException
 	{
 		//User Input Variables (Defined Outside Loop)
 		double[] breakfastCharge;
 		double[] lunchCharge;
 		double[] dinnerCharge;
 		double[] miscCharge;
+
+		//The allotted funding provided to the employee by the employer.
+		//These rates are currently hard-coded here and reflect values that would be chosen by the employer.
+		final double breakfastAllowance = 25.50;
+		final double lunchAllowance = 20.00;
+		final double dinnerAllowance = 30.25;
+		final double miscAllowance = 40.00;
 
 		//Print Header To Terminal
 		System.out.println("\n_________________________\nDaily Expenses:");
@@ -34,6 +41,11 @@ public class FourthInput
 			lunchCharge = new double[100];
 			dinnerCharge = new double[100];
 			miscCharge = new double[100];
+
+			//Variables used for expense calculations.
+			double expenseTotal = 0.00;
+			double allowanceTotal = 0.00;
+			double overageTotal = 0.00;
 
 			//User Input Fields
 			JTextField breakfastField = new JTextField(5);
@@ -94,6 +106,70 @@ public class FourthInput
 				dinnerCharge[runCount] = Double.parseDouble(dinnerTemp);
 				miscCharge[runCount] = Double.parseDouble(miscTemp);
 
+				//Sum of all expenses enacted by the employee during the trip.
+				expenseTotal += (breakfastCharge[runCount] + lunchCharge[runCount] + dinnerCharge[runCount] + miscCharge[runCount]);
+				
+				//If the first day of the trip is currently being calculated...
+				if (runCount == 0)
+				{
+					//Get the time that the employee departed on this business trip.
+					int departTime = calculate.getDepartTime();
+
+					//If the employee departed from home during the afternoon...
+					if (departTime > 1200)
+					{
+						//...any breakfast expense made on the first day of the trip will not be covered by the employer.
+					}
+					//Otherwise...
+					else
+					{
+						//...add the breakfast allowance to the sum off allowed expenses.
+						allowanceTotal += breakfastAllowance;
+					}
+				}
+				//Otherwise...
+				else
+				{
+					//...add the breakfast allowance to the sum off allowed expenses.
+					allowanceTotal += breakfastAllowance;
+				}
+
+				//If the final day of the trip is currently being calculated...
+				if (runCount == (tripDuration - 1))
+				{
+					//Get the time that the employee departed on this business trip.
+					int arriveTime = calculate.getArriveTime();
+
+					//If the employee arrived home from the trip before noon...
+					if (arriveTime < 1200)
+						{
+							//...any dinner expense made during the final day of the trip will not be covered by the employer.
+						}
+						//Otherwise...
+						else
+						{
+							//...add the dinner allowance to the sum off allowed expenses.
+							allowanceTotal += dinnerAllowance;
+						}
+					}
+				//Otherwise...
+				else
+				{
+					//...add the dinner allowance to the sum off allowed expenses.
+					allowanceTotal += dinnerAllowance;
+				}
+
+				//Sum of all funds allocated to the employee by the employer for each category. (Breakfast and dinner have already been accounted for above.)
+				allowanceTotal += (lunchAllowance + miscAllowance);
+
+				//Calculate the surpluses or overages for each category of expenditure made by the employee during this day of the business trip.
+				overageTotal += ((breakfastAllowance - breakfastCharge[runCount]) + (lunchAllowance - lunchCharge[runCount]) + (dinnerAllowance - dinnerCharge[runCount]) + (miscAllowance - miscCharge[runCount]));
+
+				//Send the data from the current day to the CalculationClass subprogram to be added for future calculations.
+				calculate.setExpenseTotal(expenseTotal);
+				calculate.setAllowanceTotal(allowanceTotal);
+				calculate.setOverageTotal(overageTotal);
+
 				//Open FilenameStorage.txt
 				File readFile = new File("FilenameStorage.txt");
 
@@ -136,5 +212,8 @@ public class FourthInput
 				System.exit(1); //Exit Program
 			}
 		}
+
+		//Append the employee expense report with the calculated expenses and allowances.
+		//calculate.reportFinances();
 	}
 }

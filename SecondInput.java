@@ -16,11 +16,10 @@ public class SecondInput
 	private String invoiceFileName = "";
 
 	//secondInputs Method
-	public void secondInputs() throws IOException
+	public void secondInputs(CalculationClass calculate) throws IOException
 	{
 		//User Input Fields
 		JTextField leaveField = new JTextField(5);
-		JTextField departField = new JTextField(5);
 		JTextField arriveField = new JTextField(5);
 
 		//Define new JPanel "inputPanel".
@@ -32,11 +31,6 @@ public class SecondInput
 		//"Left home" Input Field
 		inputPanel.add(new JLabel("Time you left home when you began your trip:"));
 		inputPanel.add(leaveField);
-		inputPanel.add(Box.createVerticalStrut(15));
-
-		//"Depart for home" Input Field
-		inputPanel.add(new JLabel("Time you departed for home at the end of your trip:"));
-		inputPanel.add(departField);
 		inputPanel.add(Box.createVerticalStrut(15));
 
 		//"Arrive home" Input Field
@@ -53,14 +47,12 @@ public class SecondInput
 		//If the user clicks "Okay" on the input window...
 		if (result == JOptionPane.OK_OPTION)
 		{
-			//Assign the user-entered text from the textboxes to their respective variables.
-			String leaveTemp = leaveField.getText();	//Assign the user-entered string value to a temporary variable before parsing.
-			String departTemp = departField.getText();	//Assign the user-entered string value to a temporary variable before parsing.
-			String arriveTemp = arriveField.getText();	//Assign the user-entered string value to a temporary variable before parsing.
+			//Assign the user-entered text from the textboxes to their respective String variables before parsing to integers.
+			String departTemp = leaveField.getText();
+			String arriveTemp = arriveField.getText();
 
-			//Parse the respective string values to their integer-type variables.
-			int leaveHome = Integer.parseInt(leaveTemp);
-			int departForHome = Integer.parseInt(departTemp);
+			//Parse the string values to their respective integer-type variables.
+			int departForTrip = Integer.parseInt(departTemp);
 			int arriveAtHome = Integer.parseInt(arriveTemp);
 
 			//Open FilenameStorage.txt
@@ -76,15 +68,17 @@ public class SecondInput
 			PrintWriter textFileOutput = new PrintWriter(empInvoice);
 
 			//Echo print to the terminal.
-			System.out.println("\nTime Left Home:\t\t\t" + leaveTemp);
-			System.out.println("Time Departed for Home:\t\t" + departTemp);
+			System.out.println("\nTime Left Home:\t\t\t" + departTemp);
 			System.out.println("Time Arrived at Home:\t\t" + arriveTemp);
 
 			//Add data to the travel expense receipt file.
-			textFileOutput.println("Time Left Home:\t\t\t" + leaveTemp);
-			textFileOutput.println("Time Departed for Home:\t\t" + departTemp);
+			textFileOutput.println("Time Left Home:\t\t\t" + departTemp);
 			textFileOutput.println("Time Arrived at Home:\t\t" + arriveTemp);
 			textFileOutput.close(); //Close the invoice text file.
+
+			//Send the three times to the CalcClass external class for storage.
+			//These values will be used during the FourthInput external class.
+			calculate.setTime(departForTrip, arriveAtHome);
 		}
 		else //Otherwise, if the user exited the program via the "Exit" or "X" button...
 		{

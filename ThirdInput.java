@@ -52,12 +52,12 @@ public class ThirdInput
 		//If the user clicks "Okay" on the input window...
 		if (result == JOptionPane.OK_OPTION)
 		{
-			//Assign the user-entered text from the textboxes to their respective variables.
-			String airTemp = airField.getText();		//Assign the user-entered string value to a temporary variable before parsing.
-			String rentalTemp = rentalField.getText();	//Assign the user-entered string value to a temporary variable before parsing.
-			String registTemp = registField.getText();	//Assign the user-entered string value to a temporary variable before parsing.
+			//Assign the user-entered text from the textboxes to their respective String variables.
+			String airTemp = airField.getText();
+			String rentalTemp = rentalField.getText();
+			String registTemp = registField.getText();
 
-			//Parse the respective string values to their double-type variables.
+			//Parse the string values to their double-type variables.
 			double airFare = Double.parseDouble(airTemp);
 			double rentalFees = Double.parseDouble(rentalTemp);
 			double registFees = Double.parseDouble(registTemp);
